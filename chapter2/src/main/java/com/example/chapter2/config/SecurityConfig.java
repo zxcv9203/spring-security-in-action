@@ -2,12 +2,15 @@ package com.example.chapter2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
@@ -29,5 +32,12 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         // 암호에 암호화나 해시를 적용하지 않고 일반 텍스트처럼 처리
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
+                .httpBasic(Customizer.withDefaults());
+        return http.build();
     }
 }

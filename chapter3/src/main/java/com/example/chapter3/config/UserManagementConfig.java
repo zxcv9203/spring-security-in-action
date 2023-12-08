@@ -8,18 +8,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import java.util.List;
+import javax.sql.DataSource;
 
 @Configuration
 public class UserManagementConfig {
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = new InMemoryUser("kim", "1234", "read");
-        List<UserDetails> users = List.of(user);
-
-        return new InMemoryUserDetailsService(users);
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean

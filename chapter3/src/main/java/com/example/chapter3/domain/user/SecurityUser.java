@@ -1,5 +1,6 @@
 package com.example.chapter3.domain.user;
 
+import com.example.chapter3.domain.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -18,7 +18,9 @@ public class FilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(c -> {
+                    c.realmName("OTHER");
+                });
         http.authenticationProvider(authenticationProvider);
         return http.build();
     }

@@ -18,7 +18,7 @@ public class FilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+                .formLogin(f -> f.defaultSuccessUrl("/main", true));
         http.authenticationProvider(authenticationProvider);
         return http.build();
     }

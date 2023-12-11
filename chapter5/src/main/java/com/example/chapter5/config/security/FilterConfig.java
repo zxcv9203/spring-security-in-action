@@ -20,6 +20,7 @@ public class FilterConfig {
         http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
                 .httpBasic(c -> {
                     c.realmName("OTHER");
+                    c.authenticationEntryPoint(new CustomEntryPoint());
                 });
         http.authenticationProvider(authenticationProvider);
         return http.build();

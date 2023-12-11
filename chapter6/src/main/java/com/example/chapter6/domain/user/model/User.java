@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -22,7 +23,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EncryptionAlgorithm algorithm;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "authorities")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -16,6 +17,6 @@ public class Authority {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn
     private User user;
 }

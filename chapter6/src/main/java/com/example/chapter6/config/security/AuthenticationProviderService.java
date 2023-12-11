@@ -8,18 +8,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationProviderService implements AuthenticationProvider {
 
     private final JpaUserDetailsService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final SCryptPasswordEncoder sCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -27,11 +26,8 @@ public class AuthenticationProviderService implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
 
         LoginUser user = userDetailsService.loadUserByUsername(username);
+        return checkPassword(user, password);
 
-        return switch (user.getUser().getAlgorithm()) {
-            case BCRYPT -> checkPassword(user, password, bCryptPasswordEncoder);
-            case SCRYPT -> checkPassword(user, password, sCryptPasswordEncoder);
-        };
     }
 
     @Override
@@ -39,8 +35,10 @@ public class AuthenticationProviderService implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    private Authentication checkPassword(LoginUser user, String rawPassword, PasswordEncoder passwordEncoder) {
-        if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+    private Authentication checkPassword(LoginUser user, String rawPassword) {
+        String prefixEncodedPassword = user.getUser().getAlgorithm().getPrefix() + user.getPassword();
+
+        if (passwordEncoder.matches(rawPassword, prefixEncodedPassword)) {
             return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
         } else {
             throw new BadCredentialsException("잘못된 비밀번호입니다.");

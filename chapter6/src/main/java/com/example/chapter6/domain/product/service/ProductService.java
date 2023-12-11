@@ -1,4 +1,4 @@
-package com.example.chapter6.domain.product;
+package com.example.chapter6.domain.product.service;
 
 import com.example.chapter6.domain.product.model.Product;
 import com.example.chapter6.domain.product.repository.ProductRepository;

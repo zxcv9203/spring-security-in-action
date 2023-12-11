@@ -29,7 +29,8 @@ public class FilterConfig {
                     f.defaultSuccessUrl("/main", true);
                     f.successHandler(authenticationSuccessHandler);
                     f.failureHandler(authenticationFailureHandler);
-                });
+                })
+                .httpBasic(Customizer.withDefaults());
         http.authenticationProvider(authenticationProvider);
         return http.build();
     }

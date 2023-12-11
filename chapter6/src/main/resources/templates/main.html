@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2 th:text="'안녕하세요, ' + ${username} + '!'" />
+    <p><a href="/logout">sign out</a></p>
+
+    <h2>상품 목록</h2>
+    <table>
+        <thead>
+        <tr>
+            <th> 이름 </th>
+            <th> 가격 </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${products.empty}">
+            <td colspan="2"> 상품이 존재하지 않습니다.</td>
+        </tr>
+        <tr th:each="book : ${products}">
+            <td><span th:text="${book.name}"> 이름 </span></td>
+            <td><span th:text="${book.price}"> 가격 </span></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

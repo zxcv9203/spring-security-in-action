@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class FilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authz -> authz.anyRequest().hasRole("ADMIN"))
+        http.authorizeHttpRequests(authz -> authz.anyRequest().denyAll())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

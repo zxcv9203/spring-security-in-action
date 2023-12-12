@@ -18,12 +18,12 @@ public class UserManagementConfig {
 
         UserDetails readUser = User.withUsername("kim")
                 .password("1234")
-                .authorities("READ")
+                .roles("ADMIN")
                 .build();
 
         UserDetails writeUser = User.withUsername("park")
                 .password("1234")
-                .authorities("WRITE")
+                .roles("DEVELOPER")
                 .build();
 
         userDetailsService.createUser(readUser);

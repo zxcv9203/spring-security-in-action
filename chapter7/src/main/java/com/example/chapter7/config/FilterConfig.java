@@ -10,8 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class FilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // CustomAuthorizationManager에서 통과하는 경우 액세스 허용
-        http.authorizeHttpRequests(authz -> authz.anyRequest().access(new CustomAuthorizationManager()))
+        http.authorizeHttpRequests(authz -> authz.anyRequest().hasRole("ADMIN"))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

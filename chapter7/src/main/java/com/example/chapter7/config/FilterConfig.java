@@ -10,8 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class FilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // WRITE, READ 권한 중 하나라도 있는 사용자는 요청 허용
-        http.authorizeHttpRequests(authz -> authz.anyRequest().hasAnyAuthority("WRITE", "READ"))
+        // CustomAuthorizationManager에서 통과하는 경우 액세스 허용
+        http.authorizeHttpRequests(authz -> authz.anyRequest().access(new CustomAuthorizationManager()))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

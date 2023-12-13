@@ -10,10 +10,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class FilterConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
                         .requestMatchers("/hello").hasRole("ADMIN")
-                        .requestMatchers("/hi").hasRole("DEVELOPER"))
+                        .requestMatchers("/hi").hasRole("DEVELOPER")
+                        .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

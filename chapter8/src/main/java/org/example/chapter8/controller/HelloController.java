@@ -15,4 +15,9 @@ public class HelloController {
     public String hi() {
         return "hi";
     }
+
+    @GetMapping("/bye")
+    public String bye() {
+        return "bye";
+    }
 }

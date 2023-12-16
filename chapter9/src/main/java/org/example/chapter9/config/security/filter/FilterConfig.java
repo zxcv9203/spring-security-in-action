@@ -11,7 +11,8 @@ public class FilterConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class);
+        http.addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthenticationLogginFilter(), BasicAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authz -> authz.anyRequest().permitAll());
 

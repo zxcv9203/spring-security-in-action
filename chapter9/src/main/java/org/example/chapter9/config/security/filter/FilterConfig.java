@@ -9,10 +9,15 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class FilterConfig {
 
+    private final StaticKeyAuthenticationFilter authFilter;
+
+    public FilterConfig(StaticKeyAuthenticationFilter authFilter) {
+        this.authFilter = authFilter;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new AuthenticationLogginFilter(), BasicAuthenticationFilter.class);
+        http.addFilterAt(authFilter, BasicAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authz -> authz.anyRequest().permitAll());
 

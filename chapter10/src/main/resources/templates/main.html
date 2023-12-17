@@ -12,6 +12,12 @@
     <span>Name:</span>
     <span><input type="text" name="name"/></span>
     <span><button type="submit"/>ADD</button></span>
+
+<!--    숨겨진 입력으로 CSRF 토큰을 요청에 추가 -->
+<!--    th 접두사를 통해 타임리프를 이용해 토큰 값 출력-->
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"/>
 </form>
 </body>
 </html>

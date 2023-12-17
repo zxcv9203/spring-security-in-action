@@ -11,9 +11,8 @@ public class FilterConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.addFilterAfter(new CsrfTokenLogger(), CsrfFilter.class);
-
-        http.authorizeHttpRequests(authz -> authz.anyRequest().permitAll());
+        http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
+                .formLogin(authz -> authz.defaultSuccessUrl("/main", true));
 
         return http.build();
     }

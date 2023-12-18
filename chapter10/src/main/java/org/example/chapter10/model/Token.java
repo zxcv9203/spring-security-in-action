@@ -21,9 +21,12 @@ public class Token {
     protected Token() {
     }
 
-    public Token(Long id, String identifier, String token) {
-        this.id = id;
+    public Token(String identifier, String token) {
         this.identifier = identifier;
+        this.token = token;
+    }
+
+    public void changeToken(String token) {
         this.token = token;
     }
 

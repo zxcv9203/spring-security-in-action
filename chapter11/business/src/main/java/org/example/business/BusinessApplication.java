@@ -1,13 +1,13 @@
-package org.example.chapter11;
+package org.example.business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Chapter11Application {
+public class BusinessApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Chapter11Application.class, args);
+        SpringApplication.run(BusinessApplication.class, args);
     }
 
 }

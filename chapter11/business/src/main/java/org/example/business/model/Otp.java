@@ -10,4 +10,12 @@ public class Otp {
         this.username = username;
         this.code = code;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCode() {
+        return code;
+    }
 }

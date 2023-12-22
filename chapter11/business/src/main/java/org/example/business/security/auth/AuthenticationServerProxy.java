@@ -31,7 +31,7 @@ public class AuthenticationServerProxy {
     }
 
     public boolean sendOTP(String username, String code) {
-        String url = "baseUrl" + "/otp/check";
+        String url = baseUrl + "/otp/check";
 
         Otp otp = new Otp(username, code);
 

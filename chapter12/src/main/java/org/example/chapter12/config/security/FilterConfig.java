@@ -6,11 +6,17 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class FilterConfig {
+
+    @Bean
+    public ClientRegistrationRepository clientRepository() {
+        return new InMemoryClientRegistrationRepository(clientRegistration());
+    }
 
     private ClientRegistration clientRegistration() {
         return CommonOAuth2Provider.GITHUB

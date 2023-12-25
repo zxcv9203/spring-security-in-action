@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.security.oauth:spring-security-oauth2'
+//	implementation 'org.springframework.security.oauth:spring-security-oauth2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'

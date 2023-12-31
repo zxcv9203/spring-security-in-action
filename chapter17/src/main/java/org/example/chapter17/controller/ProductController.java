@@ -1,8 +1,10 @@
 package org.example.chapter17.controller;
 
 import org.example.chapter17.domain.Product;
+import org.example.chapter17.repository.ProductRepository;
 import org.example.chapter17.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -11,9 +13,10 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
-    public ProductController(ProductService productService) {
+    private final ProductRepository productRepository;
+    public ProductController(ProductService productService, ProductRepository productRepository) {
         this.productService = productService;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/sell")
@@ -29,5 +32,10 @@ public class ProductController {
     @GetMapping("/find")
     public List<Product> findProducts() {
         return productService.findProducts();
+    }
+
+    @GetMapping("/products/{text}")
+    public List<Product> findProductsContaining(@PathVariable String text) {
+        return productRepository.findProductByNameContains(text);
     }
 }

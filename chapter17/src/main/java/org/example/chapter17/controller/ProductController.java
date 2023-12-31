@@ -1,6 +1,7 @@
 package org.example.chapter17.controller;
 
 import org.example.chapter17.domain.Product;
+import org.example.chapter17.domain.ProductEntity;
 import org.example.chapter17.repository.ProductRepository;
 import org.example.chapter17.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{text}")
-    public List<Product> findProductsContaining(@PathVariable String text) {
+    public List<ProductEntity> findProductsContaining(@PathVariable String text) {
         return productRepository.findProductByNameContains(text);
     }
 }

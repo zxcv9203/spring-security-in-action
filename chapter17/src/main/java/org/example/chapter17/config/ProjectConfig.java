@@ -2,18 +2,25 @@ package org.example.chapter17.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.support.JpaEvaluationContextExtension;
+import org.springframework.data.spel.spi.EvaluationContextExtension;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableMethodSecurity
-public class UserManagementConfig {
+public class ProjectConfig {
 
+    @Bean
+    public SecurityEvaluationContextExtension evaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();

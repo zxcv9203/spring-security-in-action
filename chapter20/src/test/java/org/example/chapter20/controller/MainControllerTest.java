@@ -1,5 +1,6 @@
 package org.example.chapter20.controller;
 
+import org.example.chapter20.helper.WithCustomUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -35,6 +36,13 @@ class MainControllerTest {
     @Test
     @WithUserDetails("kim")
     public void userDetailsServiceTest() throws Exception {
+        mvc.perform(get("/"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithCustomUser(username = "kim")
+    public void customAuthenticationTest() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk());
     }

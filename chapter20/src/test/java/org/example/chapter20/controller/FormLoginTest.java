@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,5 +24,22 @@ public class FormLoginTest {
                         .user("unknown").password("1234"))
                 .andExpect(header().exists("failed"))
                 .andExpect(unauthenticated());
+    }
+
+    @Test
+    void loggingInWithWrongAuthority() throws Exception {
+        mvc.perform(formLogin().user("kim").password("12345"))
+                .andExpect(redirectedUrl("/error"))
+                .andExpect(status().isFound())
+                .andExpect(authenticated());
+    }
+
+    @Test
+    public void loggingInWithCorrectAuthority() throws Exception {
+        mvc.perform(formLogin()
+                        .user("mary").password("12345"))
+                .andExpect(redirectedUrl("/main"))
+                .andExpect(status().isFound())
+                .andExpect(authenticated());
     }
 }

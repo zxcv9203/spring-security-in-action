@@ -13,15 +13,22 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationSuccessHandler successHandler;
 
-    public SecurityConfig(AuthenticationProvider authenticationProvider) {
+    private final AuthenticationFailureHandler failureHandler;
+
+    public SecurityConfig(AuthenticationProvider authenticationProvider, CustomAuthenticationSuccessHandler successHandler, CustomAuthenticationFailureHandler failureHandler) {
         this.authenticationProvider = authenticationProvider;
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
     }
 
     @Bean
@@ -45,7 +52,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .formLogin(f -> {
+                    f.failureHandler(failureHandler);
+                    f.successHandler(successHandler);
+                });
         http.authenticationProvider(authenticationProvider);
         return http.build();
     }
